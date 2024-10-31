@@ -6,6 +6,24 @@
 		<title>Rock Paper Scissors</title>
 	</head>
 	<body>
+		<div id="game-container">
+			<h1>Rock Paper Scissors</h1>
+			<div id="scores">
+				<div id="player-score">0</div>
+				<div id="computer-score">0</div>
+			</div>
+			<div id="game">
+				<div id="player-choice">❔</div>
+				<div id="computer-choice">❔</div>
+			</div>
+			<div id="result"></div>
+			<div id="choices">
+				<button class="choice" data-choice="rock">✊</button>
+				<button class="choice" data-choice="paper">✋</button>
+				<button class="choice" data-choice="scissors">✌️</button>
+			</div>
+			<button id="reset">Reset Game</button>
+		</div>
 		<script src="index.js"></script>
 	</body>
 </html>
