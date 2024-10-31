@@ -81,4 +81,4 @@ playAgain.addEventListener('click', () => {
 	computerScore = 0;
 	update();
 	gameContainer.style.visibility = "visible";
-})
+});
