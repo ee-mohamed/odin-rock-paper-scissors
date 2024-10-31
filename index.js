@@ -1,87 +1,84 @@
 const CHOICES = [
-	{choice: "rock", win: "scissors"},
-	{choice: "paper", win: "rock"},
-	{choice: "scissors", win: "paper"}
+	{choice: "rock", win: "scissors", icon: "✊"},
+	{choice: "paper", win: "rock", icon: "✋"},
+	{choice: "scissors", win: "paper", icon: "✌️"}
 ];
+const gameContainer = document.querySelector("#game-container")
+const playerScoreText = document.querySelector("#player-score");
+const computerScoreText = document.querySelector("#computer-score");
+const playerChoiceText = document.querySelector("#player-choice");
+const computerChoiceText = document.querySelector("#computer-choice");
+const result = document.querySelector("#result");
+const choices = document.querySelectorAll(".choice");
+const reset = document.querySelector("#reset");
+const endModal = document.querySelector("#end-modal");
+const winnerMessage = document.querySelector("#end-message");
+const playAgain = document.querySelector("#play-again");
 
+
+let computerScore = 0;
+let playerScore = 0;
 //1. get computer's choice
 
 function getComputerChoice() {
-	const number = Math.floor(Math.random() * 3);
-	console.log("Getting computer's choice...");
-	if (number === 0) {
-		return CHOICES[0];
-	} else if (number === 1) {
-		return CHOICES[1];
+	const randomIdx = Math.floor(Math.random() * 3);
+	return CHOICES[randomIdx];
+}
+
+//2. play round
+
+function update() {
+	playerScoreText.innerText = playerScore;
+	computerScoreText.innerText = computerScore;
+}
+
+function checkEndGame() {
+	if (playerScore === 3 || computerScore === 3) {
+		gameContainer.style.visibility = "hidden";
+	}
+	if (playerScore > computerScore) {
+		winnerMessage.innerText = "You win 😎";
 	} else {
-		return CHOICES[2];
+		winnerMessage.innerText = "You lose 😔";
 	}
 }
 
-//2. get human's choice
-
-function getHumanChoice() {
-	let humanChoice;
-
-	while (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
-		humanChoice = prompt("Now your turn. Rock, Paper, or Scissors");
-		if (!humanChoice) {
-			console.log("Game canceled");
-			break;
-		}
-		humanChoice = humanChoice.toLowerCase();
-		if (humanChoice === "rock" || humanChoice === "paper" || humanChoice === "scissors") {
-			break;
-		} else {
-			alert("Enter valid choice: Rock, Paper, or Scissors");
-		}
-	}
-	return humanChoice;
-}
-
-//3. play round
-
-function playRound() {
+function playRound(playerChoice) {
 	const computerChoice = getComputerChoice();
-	const humanChoice = getHumanChoice();
-	if (!humanChoice) {
-		return -1;
-	}
-	console.log("Computer chooses " + computerChoice.choice + ".");
-	if (computerChoice.win === humanChoice) {
-		console.log("Computer wins this round!");
-		return 0;
-	} else if (computerChoice.choice === humanChoice) {
-		console.log("Round tied!");
-		return 1;
+	computerChoiceText.innerText = computerChoice.icon;
+	playerChoiceText.innerText = CHOICES.find(c => c.choice === playerChoice).icon;
+	if (computerChoice.win === playerChoice) {
+		computerScore++;
+		result.innerText = "Computer wins this round.";
+	} else if (computerChoice.choice === playerChoice) {
+		result.innerText = "Round tied";
 	} else {
-		console.log("You win this round!");
-		return 2;
+		playerScore++;
+		result.innerText = "You win";
 	}
+	update();
+	checkEndGame();
 }
 
-//4. play game
+choices.forEach(button => {
+	button.addEventListener('click', () => {
+		playRound(button.dataset.choice);
+	});
+});
 
-function playGame() {
-	let computerScore = 0;
-	let humanScore = 0;
+reset.addEventListener('click', () => {
+	playerChoiceText.innerText = "❔";
+	computerChoiceText.innerText = "❔";
+	playerScore = 0;
+	computerScore = 0;
+	update();
+});
 
-	while (humanScore < 3 && computerScore < 3) {
-		console.log("YOU " + humanScore + " : " + computerScore + " PC");
-		const ret = playRound();
-		if (ret === -1) {
-			return ;
-		} else if (ret === 0) {
-			computerScore++;
-		} else if (ret === 2) {
-			humanScore++;
-		}
-	}
-	if (humanScore > computerScore) {
-		console.log("You win!");
-	} else {
-		console.log("Computer wins");
-	}
-}
-
-playGame();
+playAgain.addEventListener('click', () => {
+	playerChoiceText.innerText = "❔";
+	computerChoiceText.innerText = "❔";
+	playerScore = 0;
+	computerScore = 0;
+	update();
+	gameContainer.style.visibility = "visible";
+})

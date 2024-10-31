@@ -3,9 +3,33 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<link href="styles.css" rel="stylesheet">
 		<title>Rock Paper Scissors</title>
 	</head>
 	<body>
+		<div id="game-container">
+			<h1>Rock Paper Scissors</h1>
+			<div id="scores">
+				<div id="player-score" class="score">0</div>
+				<div id="computer-score" class="score">0</div>
+			</div>
+			<div id="game">
+				<div id="player-choice">❔</div>
+				<p id="vs">VS</p>
+				<div id="computer-choice">❔</div>
+			</div>
+			<div id="result"></div>
+			<div id="choices">
+				<button class="choice" data-choice="rock">✊</button>
+				<button class="choice" data-choice="paper">✋</button>
+				<button class="choice" data-choice="scissors">✌️</button>
+			</div>
+			<button id="reset">Reset Game</button>
+		</div>
+		<div id="end-modal">
+			<h1 id="end-message"></h1>
+			<button id="play-again">Play again.</button>
+		</div>
 		<script src="index.js"></script>
 	</body>
 </html>
