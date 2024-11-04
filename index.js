@@ -69,6 +69,7 @@ choices.forEach(button => {
 reset.addEventListener('click', () => {
 	playerChoiceText.innerText = "❔";
 	computerChoiceText.innerText = "❔";
+	result.innerText = "";
 	playerScore = 0;
 	computerScore = 0;
 	update();
@@ -77,6 +78,7 @@ reset.addEventListener('click', () => {
 playAgain.addEventListener('click', () => {
 	playerChoiceText.innerText = "❔";
 	computerChoiceText.innerText = "❔";
+	result.innerText = "";
 	playerScore = 0;
 	computerScore = 0;
 	update();
